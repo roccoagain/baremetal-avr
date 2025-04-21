@@ -57,7 +57,7 @@ $(TARGET_HEX): $(TARGET_ELF)
 
 # Upload to board (requires a detected port)
 upload: $(TARGET_HEX)
-	@test -n "$(PORT)" || (echo "🛑 No USB‐serial port found!" && exit 1)
+	@test -n "$(PORT)" || (echo "No USB‐serial port found!" && exit 1)
 	$(ARDUINO_CLI) upload \
 		--fqbn $(FQBN) \
 		--input-dir $(BUILD_DIR) \
