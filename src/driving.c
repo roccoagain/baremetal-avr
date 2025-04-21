@@ -8,7 +8,7 @@ static void delay_ms_var(uint16_t ms) {
     }
 }
 
-void drive(uint16_t duration, bool forward) {
+void drive_time(uint16_t duration, bool forward) {
     if (forward == true) {
         drive_motor(&left_motor, true);
         drive_motor(&right_motor, true);
@@ -21,7 +21,7 @@ void drive(uint16_t duration, bool forward) {
     stop_motor(&right_motor);
 }
 
-void turn(uint16_t duration, bool clockwise) {
+void turn_time(uint16_t duration, bool clockwise) {
     if (clockwise  == true) {
         drive_motor(&left_motor, true);
         drive_motor(&right_motor, false);

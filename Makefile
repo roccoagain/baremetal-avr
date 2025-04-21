@@ -55,13 +55,12 @@ $(TARGET_ELF): $(OBJS)
 $(TARGET_HEX): $(TARGET_ELF)
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
 
-# Upload to board (requires a detected port)
 upload: $(TARGET_HEX)
-	@test -n "$(PORT)" || (echo "No USB‐serial port found!" && exit 1)
+	@test -n "$(PORT)" || (echo "No USB-serial port found!" && exit 1)
 	$(ARDUINO_CLI) upload \
 		--fqbn $(FQBN) \
-		--input-dir $(BUILD_DIR) \
-		--port $(PORT)
+		--port $(PORT) \
+		--input-file $(TARGET_HEX)
 
 # Clean out build artifacts
 clean:
