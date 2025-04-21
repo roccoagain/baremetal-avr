@@ -45,3 +45,18 @@ void stop_motor(Motor* motor) {
     *motor->fwd_port &= ~motor->fwd_pin;
     *motor->rev_port &= ~motor->rev_pin;
 }
+
+void drive_motor(Motor* motor, MotorDirection direction) {
+    if (direction == MOTOR_DIR_FWD) {
+        // set the fwd pin of the motor HIGH
+        *motor->fwd_port |= motor->fwd_pin;
+        // set the rev pin of the motor LOW
+        *motor->rev_port &= ~motor->rev_pin;
+    }
+    else if (direction == MOTOR_DIR_REV) {
+        // set the fwd pin of the motor LOW
+        *motor->fwd_port &= ~motor->fwd_pin;
+        // set the rev pin of the motor HIGH
+        *motor->rev_port |= motor->rev_pin;
+    }
+}

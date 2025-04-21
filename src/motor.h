@@ -3,6 +3,11 @@
 
 #include <avr/io.h>
 
+typedef enum MotorDirection {
+    MOTOR_DIR_FWD = 0,
+    MOTOR_DIR_REV
+} MotorDirection;
+
 /// @brief Motor configuration struct
 typedef struct {
     /// @brief Port register for forward direction pin
@@ -32,7 +37,7 @@ void stop_motor(Motor* motor);
 
 /// @brief Sets a direction pin HIGH to drive the motor in that direction
 /// @param motor The motor to drive
-/// @param direction True for forward, false for reverse
-void drive_motor(Motor* motor, uint8_t direction);
+/// @param direction The direction to drive the motor (0 for forward, 1 for reverse)
+void drive_motor(Motor* motor, MotorDirection direction);
 
 #endif
