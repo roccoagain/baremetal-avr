@@ -17,20 +17,22 @@ typedef struct {
     volatile uint8_t* pwm_reg;
 } Motor;
 
-Motor left_motor = {
-    .fwd_port = &PORTE.OUT,
-    .fwd_pin = PIN0_bm,
-    .rev_port = &PORTE.OUT,
-    .rev_pin = PIN1_bm,
-    .pwm_reg = &TCA0.SPLIT.LCMP0, // LCMP0 drives WO0 (PB0)
-};
+/// @brief Left motor configuration
+extern Motor left_motor;
+/// @brief Right motor configuration
+extern Motor right_motor;
 
-Motor right_motor = {
-    .fwd_port = &PORTA.OUT,
-    .fwd_pin = PIN1_bm,
-    .rev_port = &PORTE.OUT,
-    .rev_pin = PIN3_bm,
-    .pwm_reg = &TCA0.SPLIT.HCMP1, // HCMP1 drives WO1 (PB1)
-};
+/// @brief Set up everything needed for the motors; PWM and output pins
+/// @param None
+void init_motors(void);
+
+/// @brief Sets both direction pins to LOW
+/// @param motor The motor to stop
+void stop_motor(Motor* motor);
+
+/// @brief Sets a direction pin HIGH to drive the motor in that direction
+/// @param motor The motor to drive
+/// @param direction True for forward, false for reverse
+void drive_motor(Motor* motor, uint8_t direction);
 
 #endif
