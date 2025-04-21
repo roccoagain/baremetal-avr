@@ -26,20 +26,19 @@ void init_motors() {
     // split‑mode, enable compare outputs
     TCA0.SINGLE.CTRLD = TCA_SPLIT_SPLITM_bm;
     TCA0.SPLIT.CTRLB = TCA_SPLIT_LCMP0EN_bm | TCA_SPLIT_HCMP1EN_bm;
-    // full 8‑bit period
+    // set full 8‑bit period
     TCA0.SPLIT.LPER = 255;
     TCA0.SPLIT.HPER = 255;
-    // default duty (≈ 3/255), adjust later per‑motor
-    TCA0.SPLIT.LCMP0 = 3 * 51;
-    TCA0.SPLIT.HCMP1 = 3 * 51;
-    // run at CLK_PER/64, enable timer
+    // set duty to 4V out of 5V
+    TCA0.SPLIT.LCMP0 = 4 * 51;
+    TCA0.SPLIT.HCMP1 = 4 * 51;
+    // use a prescaler of DIV64 and enable clock
     TCA0.SPLIT.CTRLA = TCA_SPLIT_CLKSEL_DIV64_gc | TCA_SPLIT_ENABLE_bm;
 
     // Enable PE0, PE1 for left motor and PA1, PE3 for right motor
     PORTE.DIRSET = PIN0_bm | PIN1_bm | PIN3_bm;
     PORTA.DIRSET = PIN1_bm;
 }
-
 
 void stop_motor(Motor* motor) {
     // disable both direction lines
