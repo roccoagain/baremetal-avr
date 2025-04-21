@@ -2,11 +2,7 @@
 #define MOTOR_H
 
 #include <avr/io.h>
-
-typedef enum MotorDirection {
-    MOTOR_DIR_FWD = 0,
-    MOTOR_DIR_REV
-} MotorDirection;
+#include <stdbool.h>
 
 /// @brief Motor configuration struct
 typedef struct {
@@ -37,7 +33,7 @@ void stop_motor(Motor* motor);
 
 /// @brief Sets a direction pin HIGH to drive the motor in that direction
 /// @param motor The motor to drive
-/// @param direction The direction to drive the motor (0 for forward, 1 for reverse)
-void drive_motor(Motor* motor, MotorDirection direction);
+/// @param forward True for forward, false for reverse
+void drive_motor(Motor* motor, bool forward);
 
 #endif

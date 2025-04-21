@@ -1,7 +1,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#include "motor.h"
+#include "driving.h"
 
 void wait_for_pf4_press(void) {
     // make PF4 an input and enable its internal pull up

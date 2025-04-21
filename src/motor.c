@@ -20,7 +20,7 @@ Motor right_motor = {
     .pwm_reg = &TCA0.SPLIT.HCMP1, // HCMP1 drives WO1 (PB1)
 };
 
-void init_motors() {
+void init_motors(void) {
     // enable PB0 & PB1 as outputs
     PORTB.DIRSET = PIN0_bm | PIN1_bm;
     // split‑mode, enable compare outputs
@@ -41,19 +41,21 @@ void init_motors() {
 }
 
 void stop_motor(Motor* motor) {
+    if (!motor) { return; }
     // disable both direction lines
     *motor->fwd_port &= ~motor->fwd_pin;
     *motor->rev_port &= ~motor->rev_pin;
 }
 
-void drive_motor(Motor* motor, MotorDirection direction) {
-    if (direction == MOTOR_DIR_FWD) {
+void drive_motor(Motor* motor, bool direction) {
+    if (!motor) { return; }
+
+    if (direction == true) {
         // set the fwd pin of the motor HIGH
         *motor->fwd_port |= motor->fwd_pin;
         // set the rev pin of the motor LOW
         *motor->rev_port &= ~motor->rev_pin;
-    }
-    else if (direction == MOTOR_DIR_REV) {
+    } else if (direction == false) {
         // set the fwd pin of the motor LOW
         *motor->fwd_port &= ~motor->fwd_pin;
         // set the rev pin of the motor HIGH
