@@ -20,6 +20,12 @@ Motor right_motor = {
     .pwm_reg = &TCA0.SPLIT.HCMP1, // HCMP1 drives WO1 (PB1)
 };
 
+void stop_motor(Motor* motor) {
+    if (!motor) { return; }
+    *motor->fwd_port &= ~motor->fwd_pin;
+    *motor->rev_port &= ~motor->rev_pin;
+}
+
 void init_motors(void) {
     // enable PB0 & PB1 as outputs
     PORTB.DIRSET = PIN0_bm | PIN1_bm;
@@ -35,27 +41,24 @@ void init_motors(void) {
     // use a prescaler of DIV64 and enable clock
     TCA0.SPLIT.CTRLA = TCA_SPLIT_CLKSEL_DIV64_gc | TCA_SPLIT_ENABLE_bm;
 
-    // Enable PE0, PE1 for left motor and PA1, PE3 for right motor
+    // Enable PE0, PE1 for left motor and PA1, PE3 for right motor direction pins
     PORTE.DIRSET = PIN0_bm | PIN1_bm | PIN3_bm;
     PORTA.DIRSET = PIN1_bm;
+
+    stop_motor(&left_motor);
+    stop_motor(&right_motor);
 }
 
-void stop_motor(Motor* motor) {
-    if (!motor) { return; }
-    // disable both direction lines
-    *motor->fwd_port &= ~motor->fwd_pin;
-    *motor->rev_port &= ~motor->rev_pin;
-}
+
 
 void drive_motor(Motor* motor, bool direction) {
     if (!motor) { return; }
-
-    if (direction == true) {
+    if (direction) {
         // set the fwd pin of the motor HIGH
         *motor->fwd_port |= motor->fwd_pin;
         // set the rev pin of the motor LOW
         *motor->rev_port &= ~motor->rev_pin;
-    } else if (direction == false) {
+    } else {
         // set the fwd pin of the motor LOW
         *motor->fwd_port &= ~motor->fwd_pin;
         // set the rev pin of the motor HIGH
