@@ -50,7 +50,18 @@ int main(void) {
         wait_for_pf4_press();
 
         // main routine
-        drive_time(2000, true);
+
+        // start and stop left motor
+        drive_motor(&left_motors, true);
+        _delay_ms(2000);
+        stop_motor(&left_motors);
+        _delay_ms(2000);
+
+        // start and stop right motor
+        drive_motor(&right_motors, true);
+        _delay_ms(2000);
+        stop_motor(&right_motors);
+        _delay_ms(2000);
     }
     return 0;
 }

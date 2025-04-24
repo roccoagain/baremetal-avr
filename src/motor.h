@@ -17,9 +17,9 @@ typedef struct {
 } Motor;
 
 /// @brief Left motor configuration
-extern Motor left_motor;
+extern Motor left_motors;
 /// @brief Right motor configuration
-extern Motor right_motor;
+extern Motor right_motors;
 
 /// @brief Set up everything needed for the motors; PWM and output pins
 /// @param None
