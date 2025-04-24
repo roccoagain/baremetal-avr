@@ -27,6 +27,8 @@ void stop_motor(Motor* motor) {
 }
 
 void init_motors(void) {
+    // use TCA0 for PB0 and PB1
+    PORTMUX.TCAROUTEA = PORTMUX_TCA0_PORTB_gc; // use TCA0 for PB0 and PB1
     // enable PB0 & PB1 as outputs
     PORTB.DIRSET = PIN0_bm | PIN1_bm;
     // split‑mode, enable compare outputs
@@ -40,16 +42,12 @@ void init_motors(void) {
     TCA0.SPLIT.HCMP1 = 4 * 51;
     // use a prescaler of DIV64 and enable clock
     TCA0.SPLIT.CTRLA = TCA_SPLIT_CLKSEL_DIV64_gc | TCA_SPLIT_ENABLE_bm;
-
     // Enable PE0, PE1 for left motor and PA1, PE3 for right motor direction pins
     PORTE.DIRSET = PIN0_bm | PIN1_bm | PIN3_bm;
     PORTA.DIRSET = PIN1_bm;
-
     stop_motor(&left_motor);
     stop_motor(&right_motor);
 }
-
-
 
 void drive_motor(Motor* motor, bool direction) {
     if (!motor) { return; }
