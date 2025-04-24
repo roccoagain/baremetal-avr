@@ -14,8 +14,6 @@ typedef struct {
     volatile uint8_t* rev_port;
     /// @brief Pin number for reverse direction
     uint8_t rev_pin;
-    /// @brief PWM register
-    volatile uint8_t* pwm_reg;
 } Motor;
 
 /// @brief Left motor configuration
@@ -27,7 +25,7 @@ extern Motor right_motor;
 /// @param None
 void init_motors(void);
 
-/// @brief Sets both direction pins to LOW
+/// @brief Sets both direction pins to LOW, stopping the motor
 /// @param motor The motor to stop
 void stop_motor(Motor* motor);
 

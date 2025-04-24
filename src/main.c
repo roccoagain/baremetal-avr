@@ -4,6 +4,8 @@
 
 #include "driving.h"
 
+/// @brief Function that halts until PF4 is pulled down
+/// @param None
 void wait_for_pf4_press(void) {
     // turn off LED
     PORTE.OUTCLR = PIN2_bm;
@@ -21,24 +23,34 @@ void wait_for_pf4_press(void) {
     PORTE.OUTSET = PIN2_bm;
 }
 
-int main(void) {
-    // Set the main clock source to internal 20 MHz oscillator
+/// @brief Everything that needs to happen before the main loop
+/// @param None
+void setup(void) {
+    // set up clock, this fixed my delay inaccuracies
     _PROTECTED_WRITE(CLKCTRL.MCLKCTRLA, CLKCTRL_CLKSEL_OSC20M_gc);
-    // Disable the clock prescaler (divide by 1)
+    // set the prescaler to 1 so we get 20MHz
     _PROTECTED_WRITE(CLKCTRL.MCLKCTRLB, 0);
-
+    // set up the LED on PE2, start with it off
     PORTE.DIRSET = PIN2_bm;
-    PORTE.OUTCLR = PIN2_bm; // start with LED off
-
+    PORTE.OUTCLR = PIN2_bm; 
+    // set up the button on PF4
     PORTF.DIRCLR = PIN4_bm;
     PORTF.PIN4CTRL |= PORT_PULLUPEN_bm;
-
+    // start pwm on PB0 and PB1
     init_motors();
+}
 
+/// @brief Calls setup, then enters main loop
+/// @param None
+/// @return 0 on success
+int main(void) {
+    setup();
     while (1) {
-        // PORTE.OUTTGL = PIN2_bm; // toggle LED
-        // _delay_ms(500); // wait 500ms
-        wait_for_pf4_press();  // Wait for user to press button on pin 6
+        // wait for PF4 to be pressed
+        wait_for_pf4_press();
+
+        // main routine
         drive_time(2000, true);
     }
+    return 0;
 }
