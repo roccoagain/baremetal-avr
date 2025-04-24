@@ -22,7 +22,9 @@ Motor right_motors = {
 
 void stop_motor(Motor* motor) {
     if (!motor) { return; }
+    // set the fwd pin of the motor LOW
     *motor->fwd_port &= ~motor->fwd_pin;
+    // set the rev pin of the motor LOW
     *motor->rev_port &= ~motor->rev_pin;
 }
 
