@@ -56,7 +56,7 @@ $(TARGET_HEX): $(TARGET_ELF)
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
 
 upload: $(TARGET_HEX)
-	@test -n "$(PORT)" || (echo "No USB-serial port found!" && exit 1)
+	@test -n "$(PORT)" || (echo "No USB serial port found!" && exit 1)
 	$(ARDUINO_CLI) upload \
 		--fqbn $(FQBN) \
 		--port $(PORT) \
