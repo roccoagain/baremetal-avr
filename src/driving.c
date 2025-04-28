@@ -22,6 +22,50 @@ void turn_time(uint16_t duration, bool clockwise) {
     stop_motor(&right_motor);
 }
 
+void drive_counts(uint16_t enc_count, bool forward) {
+    cli(); // disable interrupts
+    right_motor.enc = 0;
+    left_motor.enc = 0;
+    sei(); // re-enable interrupts
+    start_motor(&left_motor, forward);
+    start_motor(&right_motor, forward);
+    while (1) {
+        uint16_t left, right;
+        cli();
+        left = left_motor.enc;
+        right = right_motor.enc;
+        sei();
+        if (left >= enc_count && right >= enc_count) {
+            break;
+        }
+        _delay_ms(1);
+    }
+    stop_motor(&left_motor);
+    stop_motor(&right_motor);
+}
+
+void turn_counts(uint16_t enc_count, bool clockwise) {
+    cli(); // disable interrupts
+    right_motor.enc = 0;
+    left_motor.enc = 0;
+    sei(); // re-enable interrupts
+    start_motor(&left_motor, clockwise);
+    start_motor(&right_motor, !clockwise);
+    while (1) {
+        uint16_t left, right;
+        cli();
+        left = left_motor.enc;
+        right = right_motor.enc;
+        sei();
+        if (left >= enc_count && right >= enc_count) {
+            break;
+        }
+        _delay_ms(1);
+    }
+    stop_motor(&left_motor);
+    stop_motor(&right_motor);
+}
+
 void drive_distance(uint16_t feet, bool forward) {
     uint16_t enc_counts = feet * TICKS_PER_FOOT;
     drive_counts(enc_counts, forward);
