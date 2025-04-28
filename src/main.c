@@ -54,11 +54,11 @@ void setup(void) {
     PORTF.DIRCLR = PIN4_bm;
     PORTF.PIN4CTRL |= PORT_PULLUPEN_bm;
 
-    // PA0 → toggle on rising edges
+    // PA0 -> toggle on rising edges
     PORTA.DIRCLR   = PIN0_bm;  
     PORTA.PIN0CTRL = PORT_ISC_RISING_gc;  
 
-    // PC6 → toggle on rising edges
+    // PC6 -> toggle on rising edges
     PORTC.DIRCLR   = PIN6_bm;  
     PORTC.PIN6CTRL = PORT_ISC_RISING_gc;  
 
@@ -79,8 +79,10 @@ int main(void) {
 
         // main routine
 
-        // start and stop left motor
-        drive_counts(500, true);
+        drive_time(2000, true);
+        _delay_ms(2000);
+        turn_time(2000, true) ;
+        _delay_ms(2000);
     }
     return 0;
 }

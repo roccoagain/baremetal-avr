@@ -6,6 +6,9 @@
 #include <stdbool.h>
 #include "motor.h"
 
+#define TICKS_PER_FOOT 1500 // TODO: figure out what this should be
+#define TICKS_PER_DEGREE 1500 // TODO: figure out what this should be
+
 /// @brief Drive the robot in a specified direction
 /// @param duration The duration to drive (ms)
 /// @param forward True for forward, false for reverse
@@ -29,11 +32,11 @@ void turn_counts(uint16_t enc_count, bool clockwise);
 /// @brief Drive the robot a specified distance
 /// @param distance The distance to drive in feet
 /// @param forward True for forward, false for reverse
-void drive_distance(uint16_t distance, bool forward);
+void drive_distance(uint16_t feet, bool forward);
 
 /// @brief Turn the robot a specified distance
 /// @param distance The angle to turn in degrees
 /// @param clockwise True for clockwise, false for counter clockwise
-void turn_distance(uint16_t distance, bool clockwise);
+void turn_distance(uint16_t degrees, bool clockwise);
 
 #endif
