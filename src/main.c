@@ -8,7 +8,7 @@
 // right encoder on PA0
 ISR(PORTA_PORT_vect) {
     if (PORTA.INTFLAGS & PIN0_bm) {
-        right_enc++;
+        right_motor.enc++;
         PORTA.INTFLAGS = PIN0_bm;    // clear PA0's flag
     }
 }
@@ -16,7 +16,7 @@ ISR(PORTA_PORT_vect) {
 // left encoder on PC6
 ISR(PORTC_PORT_vect) {
     if (PORTC.INTFLAGS & PIN6_bm) {
-        left_enc++;
+        left_motor.enc++;
         PORTC.INTFLAGS = PIN6_bm; // clear PC6's flag
     }
 }

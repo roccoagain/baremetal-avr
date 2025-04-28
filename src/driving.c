@@ -24,12 +24,12 @@ void turn_time(uint16_t duration, bool clockwise) {
 
 void drive_counts(uint16_t enc_count, bool forward) {
     cli(); // disable interrupts
-    right_enc = 0;
-    left_enc = 0;
+    right_motor.enc = 0;
+    left_motor.enc = 0;
     sei(); // re-enable interrupts
     start_motor(&left_motor, forward);
     start_motor(&right_motor, forward);
-    while (left_enc < enc_count || right_enc < enc_count) {
+    while (left_motor.enc < enc_count || right_motor.enc < enc_count) {
         _delay_ms(1);
     }
     stop_motor(&left_motor);
@@ -38,12 +38,12 @@ void drive_counts(uint16_t enc_count, bool forward) {
 
 void turn_counts(uint16_t enc_count, bool clockwise) {
     cli(); // disable interrupts
-    right_enc = 0;
-    left_enc = 0;
+    right_motor.enc = 0;
+    left_motor.enc = 0;
     sei(); // re-enable interrupts
     start_motor(&left_motor, clockwise);
     start_motor(&right_motor, !clockwise);
-    while (left_enc < enc_count || right_enc < enc_count) {
+    while (left_motor.enc < enc_count || right_motor.enc < enc_count) {
         _delay_ms(1);
     }
     stop_motor(&left_motor);

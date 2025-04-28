@@ -1,47 +1,39 @@
 #include "motor.h"
 
-volatile uint16_t right_enc = 0;
-volatile uint16_t left_enc = 0;
-
 Motor left_motor = {
-    // PE0 is forward
     .fwd_port = &PORTE.OUT,
-    .fwd_pin = PIN0_bm,
-    // PE1 is reverse
+    .fwd_pin = PIN0_bm, // PE0 is reverse
     .rev_port = &PORTE.OUT,
-    .rev_pin = PIN1_bm,
+    .rev_pin = PIN1_bm, // PE1 is reverse
     // note: left motors are driven by TCA0_SPLIT.LCMP0 on PB0
+    .enc = 0
 };
 
 Motor right_motor = {
-    // PA1 is forward
     .fwd_port = &PORTA.OUT,
-    .fwd_pin = PIN1_bm,
-    // PE3 is reverse
+    .fwd_pin = PIN1_bm, // PA1 is forward
     .rev_port = &PORTE.OUT,
-    .rev_pin = PIN3_bm,
+    .rev_pin = PIN3_bm, // PE3 is reverse
     // note: right motors are driven by TCA0_SPLIT.HCMP1 on PB1
+    .enc = 0
 };
 
 void stop_motor(Motor* motor) {
     if (!motor) { return; }
-    // set the fwd pin of the motor LOW
+    // set fwd and rev pins low
     *motor->fwd_port &= ~motor->fwd_pin;
-    // set the rev pin of the motor LOW
     *motor->rev_port &= ~motor->rev_pin;
 }
 
 void start_motor(Motor* motor, bool direction) {
     if (!motor) { return; }
     if (direction) {
-        // set the fwd pin of the motor HIGH
+        // fwd pin high, rev pin low
         *motor->fwd_port |= motor->fwd_pin;
-        // set the rev pin of the motor LOW
         *motor->rev_port &= ~motor->rev_pin;
     } else {
-        // set the fwd pin of the motor LOW
+        // fwd pin low, rev pin high
         *motor->fwd_port &= ~motor->fwd_pin;
-        // set the rev pin of the motor HIGH
         *motor->rev_port |= motor->rev_pin;
     }
 }

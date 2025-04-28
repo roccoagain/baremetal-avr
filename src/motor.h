@@ -4,9 +4,6 @@
 #include <avr/io.h>
 #include <stdbool.h>
 
-extern volatile uint16_t right_enc;
-extern volatile uint16_t left_enc;
-
 /// @brief Motor configuration struct
 typedef struct {
     /// @brief Port register for forward direction pin
@@ -17,6 +14,8 @@ typedef struct {
     volatile uint8_t* rev_port;
     /// @brief Pin number for reverse direction
     uint8_t rev_pin;
+    /// @brief Encoder tick accumulator
+    volatile uint16_t enc;
 } Motor;
 
 /// @brief Left motor configuration
