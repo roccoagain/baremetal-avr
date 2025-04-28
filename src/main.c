@@ -1,8 +1,25 @@
 #include <avr/io.h>
 #include <avr/cpufunc.h>
 #include <util/delay.h>
+#include <avr/interrupt.h>
 
 #include "driving.h"
+
+// right encoder on PA0
+ISR(PORTA_PORT_vect) {
+    if (PORTA.INTFLAGS & PIN0_bm) {
+        right_enc++;
+        PORTA.INTFLAGS = PIN0_bm;    // clear PA0's flag
+    }
+}
+
+// left encoder on PC6
+ISR(PORTC_PORT_vect) {
+    if (PORTC_INTFLAGS & PIN6_bm) {
+        left_enc++;
+        PORTA.INTFLAGS = PIN0_bm; // clear PC6's flag
+    }
+}
 
 /// @brief Function that halts until PF4 is pulled down
 /// @param None
@@ -36,6 +53,17 @@ void setup(void) {
     // set up the button on PF4
     PORTF.DIRCLR = PIN4_bm;
     PORTF.PIN4CTRL |= PORT_PULLUPEN_bm;
+
+    // PA0 → toggle on rising edges
+    PORTA.DIRCLR   = PIN0_bm;  
+    PORTA.PIN0CTRL = PORT_ISC_RISING_gc;  
+
+    // PC6 → toggle on rising edges
+    PORTC.DIRCLR   = PIN6_bm;  
+    PORTC.PIN6CTRL = PORT_ISC_RISING_gc;  
+
+    sei(); // enable global interrupts
+
     // start pwm on PB0 and PB1
     init_motors();
 }
@@ -52,15 +80,15 @@ int main(void) {
         // main routine
 
         // start and stop left motor
-        drive_motor(&left_motors, true);
+        start_motor(&left_motor, true);
         _delay_ms(2000);
-        stop_motor(&left_motors);
+        stop_motor(&left_motor);
         _delay_ms(2000);
 
         // start and stop right motor
-        drive_motor(&right_motors, true);
+        start_motor(&right_motor, true);
         _delay_ms(2000);
-        stop_motor(&right_motors);
+        stop_motor(&right_motor);
         _delay_ms(2000);
     }
     return 0;

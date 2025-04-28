@@ -4,6 +4,9 @@
 #include <avr/io.h>
 #include <stdbool.h>
 
+extern volatile uint16_t right_enc;
+extern volatile uint16_t left_enc;
+
 /// @brief Motor configuration struct
 typedef struct {
     /// @brief Port register for forward direction pin
@@ -17,9 +20,9 @@ typedef struct {
 } Motor;
 
 /// @brief Left motor configuration
-extern Motor left_motors;
+extern Motor left_motor;
 /// @brief Right motor configuration
-extern Motor right_motors;
+extern Motor right_motor;
 
 /// @brief Set up everything needed for the motors; PWM and output pins
 /// @param None
@@ -32,6 +35,6 @@ void stop_motor(Motor* motor);
 /// @brief Sets a direction pin HIGH to drive the motor in that direction
 /// @param motor The motor to drive
 /// @param forward True for forward, false for reverse
-void drive_motor(Motor* motor, bool forward);
+void start_motor(Motor* motor, bool forward);
 
 #endif

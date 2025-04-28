@@ -2,6 +2,7 @@
 #define DRIVING_H
 
 #include <avr/io.h>
+#include <avr/interrupt.h>
 #include <stdbool.h>
 #include "motor.h"
 
@@ -14,6 +15,16 @@ void drive_time(uint16_t duration, bool forward);
 /// @param duration The duration to turn
 /// @param clockwise True for clockwise, false for counter clockwise
 void turn_time(uint16_t duration, bool clockwise);
+
+/// @brief Drive the robot for a specified number of encoder counts
+/// @param enc_count The count to drive until
+/// @param forward True for forward, false for reverse
+void drive_counts(uint16_t enc_count, bool forward);
+
+/// @brief Turn the robot for a specified number of encoder counts
+/// @param enc_count The count to turn until
+/// @param forward True for clockwise, false for counter clockwise
+void turn_counts(uint16_t enc_count, bool clockwise);
 
 /// @brief Drive the robot a specified distance
 /// @param distance The distance to drive in feet

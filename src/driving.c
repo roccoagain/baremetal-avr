@@ -7,17 +7,46 @@ static void delay_ms_var(uint16_t ms) {
 }
 
 void drive_time(uint16_t duration, bool forward) {
-    drive_motor(&left_motors, forward);
-    drive_motor(&right_motors, forward);
+    start_motor(&left_motor, forward);
+    start_motor(&right_motor, forward);
     delay_ms_var(duration);
-    stop_motor(&left_motors);
-    stop_motor(&right_motors);
+    stop_motor(&left_motor);
+    stop_motor(&right_motor);
 }
 
 void turn_time(uint16_t duration, bool clockwise) {
-    drive_motor(&left_motors, clockwise);
-    drive_motor(&right_motors, !clockwise);
+    start_motor(&left_motor, clockwise);
+    start_motor(&right_motor, !clockwise);
     delay_ms_var(duration);
-    stop_motor(&left_motors);
-    stop_motor(&right_motors);
+    stop_motor(&left_motor);
+    stop_motor(&right_motor);
 }
+
+void drive_counts(uint16_t enc_count, bool forward) {
+    cli(); // disable interrupts
+    right_enc = 0;
+    left_enc = 0;
+    sei(); // re-enable interrupts
+    start_motor(&left_motor, forward);
+    start_motor(&right_motor, forward);
+    while (left_enc < enc_count || right_enc < enc_count) {
+        _delay_ms(1);
+    }
+    stop_motor(&left_motor);
+    stop_motor(&right_motor);
+}
+
+void turn_counts(uint16_t enc_count, bool clockwise) {
+    cli(); // disable interrupts
+    right_enc = 0;
+    left_enc = 0;
+    sei(); // re-enable interrupts
+    start_motor(&left_motor, clockwise);
+    start_motor(&right_motor, !clockwise);
+    while (left_enc < enc_count || right_enc < enc_count) {
+        _delay_ms(1);
+    }
+    stop_motor(&left_motor);
+    stop_motor(&right_motor);
+}
+

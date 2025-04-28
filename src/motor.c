@@ -1,6 +1,9 @@
 #include "motor.h"
 
-Motor left_motors = {
+volatile uint16_t right_enc = 0;
+volatile uint16_t left_enc = 0;
+
+Motor left_motor = {
     // PE0 is forward
     .fwd_port = &PORTE.OUT,
     .fwd_pin = PIN0_bm,
@@ -10,7 +13,7 @@ Motor left_motors = {
     // note: left motors are driven by TCA0_SPLIT.LCMP0 on PB0
 };
 
-Motor right_motors = {
+Motor right_motor = {
     // PA1 is forward
     .fwd_port = &PORTA.OUT,
     .fwd_pin = PIN1_bm,
@@ -28,7 +31,7 @@ void stop_motor(Motor* motor) {
     *motor->rev_port &= ~motor->rev_pin;
 }
 
-void drive_motor(Motor* motor, bool direction) {
+void start_motor(Motor* motor, bool direction) {
     if (!motor) { return; }
     if (direction) {
         // set the fwd pin of the motor HIGH
@@ -61,6 +64,6 @@ void init_motors(void) {
     // Enable PE0, PE1 for left motor and PA1, PE3 for right motor direction pins
     PORTE.DIRSET = PIN0_bm | PIN1_bm | PIN3_bm;
     PORTA.DIRSET = PIN1_bm;
-    stop_motor(&left_motors);
-    stop_motor(&right_motors);
+    stop_motor(&left_motor);
+    stop_motor(&right_motor);
 }
