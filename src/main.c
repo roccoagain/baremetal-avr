@@ -15,9 +15,9 @@ ISR(PORTA_PORT_vect) {
 
 // left encoder on PC6
 ISR(PORTC_PORT_vect) {
-    if (PORTC_INTFLAGS & PIN6_bm) {
+    if (PORTC.INTFLAGS & PIN6_bm) {
         left_enc++;
-        PORTA.INTFLAGS = PIN0_bm; // clear PC6's flag
+        PORTC.INTFLAGS = PIN6_bm; // clear PC6's flag
     }
 }
 
