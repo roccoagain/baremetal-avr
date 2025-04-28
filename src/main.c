@@ -80,16 +80,7 @@ int main(void) {
         // main routine
 
         // start and stop left motor
-        start_motor(&left_motor, true);
-        _delay_ms(2000);
-        stop_motor(&left_motor);
-        _delay_ms(2000);
-
-        // start and stop right motor
-        start_motor(&right_motor, true);
-        _delay_ms(2000);
-        stop_motor(&right_motor);
-        _delay_ms(2000);
+        drive_counts(500, true);
     }
     return 0;
 }

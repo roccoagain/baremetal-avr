@@ -7,12 +7,12 @@
 #include "motor.h"
 
 /// @brief Drive the robot in a specified direction
-/// @param duration The duration to drive
+/// @param duration The duration to drive (ms)
 /// @param forward True for forward, false for reverse
 void drive_time(uint16_t duration, bool forward);
 
 /// @brief Turn the robot in a specified direction
-/// @param duration The duration to turn
+/// @param duration The duration to turn (ms)
 /// @param clockwise True for clockwise, false for counter clockwise
 void turn_time(uint16_t duration, bool clockwise);
 
