@@ -37,6 +37,6 @@ void drive_distance(uint16_t feet, bool forward);
 /// @brief Turn the robot a specified distance
 /// @param distance The angle to turn in degrees
 /// @param clockwise True for clockwise, false for counter clockwise
-void turn_distance(uint16_t degrees, bool clockwise);
+void turn_degrees(uint16_t degrees, bool clockwise);
 
 #endif
