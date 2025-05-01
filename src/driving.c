@@ -69,9 +69,11 @@ void turn_counts(uint16_t enc_count, bool clockwise) {
 void drive_distance(uint16_t feet, bool forward) {
     uint16_t enc_counts = feet * TICKS_PER_FOOT;
     drive_counts(enc_counts, forward);
+    _delay_ms(AFTER_MOVE_DELAY);
 }
 
 void turn_degrees(uint16_t degrees, bool clockwise) {
     uint16_t enc_counts = degrees * TICKS_PER_DEGREE;
     turn_counts(enc_counts, clockwise);
+    _delay_ms(AFTER_MOVE_DELAY);
 }

@@ -6,8 +6,10 @@
 #include <stdbool.h>
 #include "motor.h"
 
-#define TICKS_PER_FOOT 1500 // TODO: figure out what this should be
-#define TICKS_PER_DEGREE 1500 // TODO: figure out what this should be
+
+#define AFTER_MOVE_DELAY 200 // 100ms delay after moving
+#define TICKS_PER_FOOT 1250  // 1250 ticks for 1 foot
+#define TICKS_PER_DEGREE (3000.0 / 360.0) // 3000 ticks for a full rotation
 
 /// @brief Drive the robot in a specified direction
 /// @param duration The duration to drive (ms)

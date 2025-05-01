@@ -77,12 +77,11 @@ int main(void) {
         // wait for PF4 to be pressed
         wait_for_pf4_press();
 
-        // main routine
-
-        drive_time(2000, true);
-        _delay_ms(2000);
-        turn_time(2000, true) ;
-        _delay_ms(2000);
+        /* MAIN ROUTINE */
+        drive_distance(2, true); // forward 2ft
+        turn_degrees(180, true); // turn around
+        drive_distance(2, true); // forward 2ft
+        turn_degrees(180, true); // turn around
     }
     return 0;
 }
