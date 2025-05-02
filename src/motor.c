@@ -2,7 +2,7 @@
 
 Motor left_motor = {
     .fwd_port = &PORTE.OUT,
-    .fwd_pin = PIN0_bm, // PE0 is reverse
+    .fwd_pin = PIN0_bm, // PE0 is forward
     .rev_port = &PORTE.OUT,
     .rev_pin = PIN1_bm, // PE1 is reverse
     // note: left motors are driven by TCA0_SPLIT.LCMP0 on PB0
